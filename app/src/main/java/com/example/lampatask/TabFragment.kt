@@ -33,7 +33,7 @@ class TabFragment: Fragment() {
     private var _binding: TabFragmentBinding? = null
     private val binding get() = _binding!!
     private val adapter = ContentAdapter()
-    val viewModel by activityViewModels<MainViewModel>()
+    private val viewModel by activityViewModels<MainViewModel>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,14 +61,21 @@ class TabFragment: Fragment() {
             binding.recycler.addItemDecoration(decorator)
         }
 
-        viewModel.getContent(requireArguments().getSerializable(TYPE) as ContentType).observe(viewLifecycleOwner, {
+        val type = requireArguments().getSerializable(TYPE) as ContentType
+
+        viewModel.getContent(type).observe(viewLifecycleOwner, {
             adapter.setItems(it)
-            binding.pager.adapter = PagerAdapter(childFragmentManager, it)
-            binding.dots.setViewPager(binding.pager)
         })
 
-
-
+        viewModel.getTopNews(type).observe(viewLifecycleOwner, {
+            if (it.isEmpty()) {
+                binding.containerTopNews.visibility = View.GONE
+            } else {
+                binding.pager.adapter = PagerAdapter(childFragmentManager, it)
+                binding.dots.setViewPager(binding.pager)
+                binding.containerTopNews.visibility = View.VISIBLE
+            }
+        })
 
     }
 

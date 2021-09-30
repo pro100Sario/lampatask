@@ -14,6 +14,10 @@ class MainViewModel : ViewModel() {
     private val videoData: MutableLiveData<List<Content>> = MutableLiveData(ArrayList())
     private val favouritesData: MutableLiveData<List<Content>> = MutableLiveData(ArrayList())
 
+    private val topStoriesData: MutableLiveData<List<Content>> = MutableLiveData(ArrayList())
+    private val topVideoData: MutableLiveData<List<Content>> = MutableLiveData(ArrayList())
+    private val topFavouritesData: MutableLiveData<List<Content>> = MutableLiveData(ArrayList())
+
     init {
 
     }
@@ -24,9 +28,18 @@ class MainViewModel : ViewModel() {
             try {
                 val contents = contentRepository.loadData()
                 Log.d("DEV_TAG", "size: ${contents.size}")
-                storiesData.postValue(contents.filter { it.type == ContentType.STRORIES.getServerName() })
-                videoData.postValue(contents.filter { it.type == ContentType.VIDEO.getServerName() })
-                favouritesData.postValue(contents.filter { it.type == ContentType.FAVOURITES.getServerName() })
+
+                val stories = contents.filter { it.type == ContentType.STRORIES.getServerName() }
+                storiesData.postValue(stories)
+                val videos = contents.filter { it.type == ContentType.VIDEO.getServerName() }
+                videoData.postValue(videos)
+                val favourites = contents.filter { it.type == ContentType.FAVOURITES.getServerName() }
+                favouritesData.postValue(favourites)
+
+                topStoriesData.postValue(stories.filter { it.isTopNews() })
+                topVideoData.postValue(videos.filter { it.isTopNews() })
+                topFavouritesData.postValue(favourites.filter { it.isTopNews() })
+
                 liveData.postValue(Outcome.success(true))
             } catch (t: Throwable) {
                 t.printStackTrace()
@@ -43,6 +56,14 @@ class MainViewModel : ViewModel() {
             ContentType.STRORIES -> storiesData
             ContentType.VIDEO -> videoData
             ContentType.FAVOURITES -> favouritesData
+        }
+    }
+
+    fun getTopNews(contentType: ContentType): LiveData<List<Content>> {
+        return when (contentType) {
+            ContentType.STRORIES -> topStoriesData
+            ContentType.VIDEO -> topVideoData
+            ContentType.FAVOURITES -> topFavouritesData
         }
     }
 
