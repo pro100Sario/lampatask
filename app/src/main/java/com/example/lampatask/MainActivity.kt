@@ -21,6 +21,14 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
+
+import androidx.appcompat.app.ActionBarDrawerToggle
+
+import androidx.drawerlayout.widget.DrawerLayout
+
+
+
 
 
 class MainActivity : BaseActivity() {
@@ -35,7 +43,10 @@ class MainActivity : BaseActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         setSupportActionBar(binding.toolbar)
+
+        setupDrawerLayout()
 
         binding.tabLayout.setupWithViewPager(binding.viewpager)
 
@@ -63,6 +74,29 @@ class MainActivity : BaseActivity() {
 
 
         loadData()
+    }
+
+    private fun setupDrawerLayout() {
+        val drawer = binding.drawerLayout
+        val toggle = ActionBarDrawerToggle(
+            this, drawer, binding.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+        )
+        toggle.isDrawerIndicatorEnabled = false
+        drawer.addDrawerListener(toggle)
+        binding.toolbar.setNavigationOnClickListener {
+            binding.drawerLayout.openDrawer(GravityCompat.START)
+        }
+        toggle.syncState()
+
+        binding.navView.setNavigationItemSelectedListener {
+            when(it.itemId) {
+                R.id.exit -> {
+                    finish()
+                }
+            }
+            return@setNavigationItemSelectedListener true
+        }
+
     }
 
     private fun loadData() {
@@ -94,7 +128,6 @@ class MainActivity : BaseActivity() {
 
         override fun getItem(position: Int): Fragment = tabFragments[position]
     }
-
 
 
 
@@ -134,6 +167,8 @@ class MainActivity : BaseActivity() {
     override fun onBackPressed() {
         if (menuItem?.isActionViewExpanded == true) {
             closeSearch()
+        } else if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
         }

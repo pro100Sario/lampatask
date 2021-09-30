@@ -13,4 +13,6 @@
     <string name="search_title">Search</string>
     <string name="search_hint">Search</string>
     <string name="top">TOP</string>
+    <string name="navigation_drawer_open">Open menu</string>
+    <string name="navigation_drawer_close">close menu</string>
 </resources>
