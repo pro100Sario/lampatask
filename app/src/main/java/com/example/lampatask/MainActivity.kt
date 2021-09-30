@@ -2,10 +2,44 @@ package com.example.lampatask
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
+import com.example.lampatask.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.tabLayout.setupWithViewPager(binding.viewpager)
+
+        val tabFragments = arrayListOf<TabFragment>(
+            TabFragment.newInstance(TabType.STRORIES),
+            TabFragment.newInstance(TabType.VIDEO),
+            TabFragment.newInstance(TabType.FAVOURITES)
+        )
+
+
+        val pagerAdapter = PagerAdapter(supportFragmentManager, tabFragments = tabFragments)
+        binding.viewpager.adapter = pagerAdapter
+
+        tabFragments.forEachIndexed { index, fragment ->
+                binding.tabLayout.getTabAt(index)?.text = fragment.getTypeName()
+        }
     }
+
+
+    private inner class PagerAdapter(fm: FragmentManager, val tabFragments: ArrayList<TabFragment>) : FragmentStatePagerAdapter(fm) {
+        override fun getCount(): Int = tabFragments.size
+
+        override fun getItem(position: Int): Fragment = tabFragments[position]
+    }
+
+
+
+
 }
