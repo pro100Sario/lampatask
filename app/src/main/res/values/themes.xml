@@ -16,7 +16,9 @@
         <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
 
         <item name="tabStyle">@style/Widget.App.TabLayout</item>
+
     </style>
+
 
 
     <style name="Widget.App.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">

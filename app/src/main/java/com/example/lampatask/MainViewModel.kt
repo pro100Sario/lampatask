@@ -18,6 +18,11 @@ class MainViewModel : ViewModel() {
     private val topVideoData: MutableLiveData<List<Content>> = MutableLiveData(ArrayList())
     private val topFavouritesData: MutableLiveData<List<Content>> = MutableLiveData(ArrayList())
 
+    var stories: List<Content> = ArrayList()
+    var videos: List<Content> = ArrayList()
+    var favourites: List<Content> = ArrayList()
+
+
     init {
 
     }
@@ -27,13 +32,12 @@ class MainViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val contents = contentRepository.loadData()
-                Log.d("DEV_TAG", "size: ${contents.size}")
 
-                val stories = contents.filter { it.type == ContentType.STRORIES.getServerName() }
+                stories = contents.filter { it.type == ContentType.STRORIES.getServerName() }
                 storiesData.postValue(stories)
-                val videos = contents.filter { it.type == ContentType.VIDEO.getServerName() }
+                videos = contents.filter { it.type == ContentType.VIDEO.getServerName() }
                 videoData.postValue(videos)
-                val favourites = contents.filter { it.type == ContentType.FAVOURITES.getServerName() }
+                favourites = contents.filter { it.type == ContentType.FAVOURITES.getServerName() }
                 favouritesData.postValue(favourites)
 
                 topStoriesData.postValue(stories.filter { it.isTopNews() })
@@ -64,6 +68,20 @@ class MainViewModel : ViewModel() {
             ContentType.STRORIES -> topStoriesData
             ContentType.VIDEO -> topVideoData
             ContentType.FAVOURITES -> topFavouritesData
+        }
+    }
+
+    fun query(query: String) {
+        viewModelScope.launch (Dispatchers.IO) {
+            if (query.isEmpty()) {
+                storiesData.postValue(stories)
+                videoData.postValue(videos)
+                favouritesData.postValue(favourites)
+            } else {
+                storiesData.postValue(stories.filter { it.title.contains(query) })
+                videoData.postValue(videos.filter { it.title.contains(query) })
+                favouritesData.postValue(favourites.filter { it.title.contains(query) })
+            }
         }
     }
 

@@ -9,4 +9,7 @@
     <string name="exit">Exit from app</string>
     <string name="error_open">Error open browser</string>
     <string name="empty_link">No link for open</string>
+    <string name="search">Search</string>
+    <string name="search_title">Search</string>
+    <string name="search_hint">Search</string>
 </resources>
