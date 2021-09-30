@@ -17,7 +17,7 @@ class TabFragment: Fragment() {
 
         private const val TYPE = "com.example.lampatask.TYPE"
 
-        fun newInstance(type: TabType): TabFragment {
+        fun newInstance(type: ContentType): TabFragment {
             return TabFragment().apply {
                 arguments = Bundle().apply {
                     putSerializable(TYPE, type)
@@ -58,7 +58,7 @@ class TabFragment: Fragment() {
             binding.recycler.addItemDecoration(decorator)
         }
 
-        viewModel.getContent().observe(viewLifecycleOwner, {
+        viewModel.getContent(requireArguments().getSerializable(TYPE) as ContentType).observe(viewLifecycleOwner, {
             adapter.setItems(it)
         })
     }
@@ -70,7 +70,7 @@ class TabFragment: Fragment() {
     }
 
     fun getTypeName(): String {
-        return (arguments?.getSerializable(TYPE) as TabType).name
+        return (arguments?.getSerializable(TYPE) as ContentType).name
     }
 
 

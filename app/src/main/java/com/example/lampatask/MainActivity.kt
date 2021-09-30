@@ -21,9 +21,9 @@ class MainActivity : AppCompatActivity() {
         binding.tabLayout.setupWithViewPager(binding.viewpager)
 
         val tabFragments = arrayListOf<TabFragment>(
-            TabFragment.newInstance(TabType.STRORIES),
-            TabFragment.newInstance(TabType.VIDEO),
-            TabFragment.newInstance(TabType.FAVOURITES)
+            TabFragment.newInstance(ContentType.STRORIES),
+            TabFragment.newInstance(ContentType.VIDEO),
+            TabFragment.newInstance(ContentType.FAVOURITES)
         )
 
 
