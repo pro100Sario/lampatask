@@ -50,6 +50,7 @@ class TopNewsFragment: Fragment() {
         binding.link.text = content.clickUrl
         val timeBuilder = "- ${content.time}"
         binding.time.text = timeBuilder
+        binding.image.load(content.img)
     }
 
 

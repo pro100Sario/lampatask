@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.lampatask.databinding.ItemContentBinding
 
 class ContentAdapter: RecyclerView.Adapter<ContentAdapter.ItemViewHolder>() {
@@ -32,6 +33,7 @@ class ContentAdapter: RecyclerView.Adapter<ContentAdapter.ItemViewHolder>() {
             binding.link.text = item.clickUrl
             val timeBuilder = "- ${item.time}"
             binding.time.text = timeBuilder
+            binding.image.load(item.img)
         }
     }
 
