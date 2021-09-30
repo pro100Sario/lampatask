@@ -43,4 +43,22 @@
         <item name="colorOnSurface">@color/white</item>
     </style>
 
+    <style name="ItemContentBaseTitleText">
+        <item name="android:textColor">@color/color_base_title_text</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ItemContentBaseLinkText">
+        <item name="android:textColor">@color/color_base_link_text</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="ItemContentBaseTimeText">
+        <item name="android:textColor">@color/color_base_time_text</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
 </resources>
