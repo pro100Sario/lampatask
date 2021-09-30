@@ -1,6 +1,7 @@
 package com.example.lampatask
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Content(
     @SerializedName("title") val title: String = "",
@@ -9,7 +10,7 @@ data class Content(
     @SerializedName("click_url") val clickUrl: String = "",
     @SerializedName("time") val time: String = "",
     @SerializedName("top") val top: String = ""
-) {
+): Serializable {
 
 
 

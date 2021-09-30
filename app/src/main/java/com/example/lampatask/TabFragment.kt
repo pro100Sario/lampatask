@@ -6,10 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lampatask.databinding.TabFragmentBinding
+import java.io.Serializable
 
 class TabFragment: Fragment() {
 
@@ -60,7 +63,12 @@ class TabFragment: Fragment() {
 
         viewModel.getContent(requireArguments().getSerializable(TYPE) as ContentType).observe(viewLifecycleOwner, {
             adapter.setItems(it)
+            binding.pager.adapter = PagerAdapter(childFragmentManager, it)
         })
+
+
+
+
     }
 
 
@@ -71,6 +79,14 @@ class TabFragment: Fragment() {
 
     fun getTypeName(): String {
         return (arguments?.getSerializable(TYPE) as ContentType).name
+    }
+
+
+    private inner class PagerAdapter(fm: FragmentManager, val contents: List<Content>) : FragmentStatePagerAdapter(fm) {
+        override fun getCount(): Int = contents.size
+
+        override fun getItem(position: Int): Fragment = TopNewsFragment.newInstance(contents[position])
+
     }
 
 

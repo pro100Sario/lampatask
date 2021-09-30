@@ -13,7 +13,9 @@
     <color name="color_def_primary_variant">#0D0D0D</color>
 
     <color name="color_divider">#ECECEC</color>
+    <color name="color_filter">#80000000</color>
     <color name="color_base_title_text">#242223</color>
+    <color name="color_top_news_title_text">#FFFFFF</color>
     <color name="color_base_link_text">#55C2F3</color>
     <color name="color_base_time_text">#A4A4A4</color>
 

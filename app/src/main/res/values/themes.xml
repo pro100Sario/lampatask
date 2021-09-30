@@ -49,6 +49,12 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="ItemContentTopNewsTitleText">
+        <item name="android:textColor">@color/color_top_news_title_text</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="ItemContentBaseLinkText">
         <item name="android:textColor">@color/color_base_link_text</item>
         <item name="android:textSize">14sp</item>
