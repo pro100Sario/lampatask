@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lampatask.databinding.TabFragmentBinding
@@ -29,6 +30,7 @@ class TabFragment: Fragment() {
     private var _binding: TabFragmentBinding? = null
     private val binding get() = _binding!!
     private val adapter = ContentAdapter()
+    val viewModel by activityViewModels<MainViewModel>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,12 +49,8 @@ class TabFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.recycler.adapter = adapter
-        val mockList = ArrayList<Content>().apply {
-            for (i in 0 until 50) {
-                add(Content())
-            }
-        }
-        adapter.setItems(mockList)
+
+
 
         context?.let {
             val decorator = DividerItemDecoration(it, LinearLayoutManager.VERTICAL)
@@ -60,7 +58,9 @@ class TabFragment: Fragment() {
             binding.recycler.addItemDecoration(decorator)
         }
 
-
+        viewModel.getContent().observe(viewLifecycleOwner, {
+            adapter.setItems(it)
+        })
     }
 
 

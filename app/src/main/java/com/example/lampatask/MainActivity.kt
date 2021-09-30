@@ -2,6 +2,7 @@ package com.example.lampatask
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -10,6 +11,8 @@ import com.example.lampatask.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
+    val viewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +33,9 @@ class MainActivity : AppCompatActivity() {
         tabFragments.forEachIndexed { index, fragment ->
                 binding.tabLayout.getTabAt(index)?.text = fragment.getTypeName()
         }
+
+
+        viewModel.loadData()
     }
 
 
