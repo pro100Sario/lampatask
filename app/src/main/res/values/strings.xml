@@ -7,4 +7,6 @@
     <string name="error_message">Something went netak, please check internet connect or try again later</string>
     <string name="retry">Retry</string>
     <string name="exit">Exit from app</string>
+    <string name="error_open">Error open browser</string>
+    <string name="empty_link">No link for open</string>
 </resources>

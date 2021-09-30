@@ -13,6 +13,10 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lampatask.databinding.TabFragmentBinding
 import java.io.Serializable
+import android.content.Intent
+import android.net.Uri
+import android.widget.Toast
+
 
 class TabFragment: Fragment() {
 
@@ -32,7 +36,9 @@ class TabFragment: Fragment() {
 
     private var _binding: TabFragmentBinding? = null
     private val binding get() = _binding!!
-    private val adapter = ContentAdapter()
+    private val adapter = ContentAdapter() {
+        activity?.openInBrowser(it)
+    }
     private val viewModel by activityViewModels<MainViewModel>()
 
 

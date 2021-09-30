@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.lampatask.databinding.ItemContentBinding
 
-class ContentAdapter: RecyclerView.Adapter<ContentAdapter.ItemViewHolder>() {
+class ContentAdapter(private val click: (Content) -> Unit): RecyclerView.Adapter<ContentAdapter.ItemViewHolder>() {
 
     private val items: ArrayList<Content> = ArrayList()
 
@@ -34,6 +34,9 @@ class ContentAdapter: RecyclerView.Adapter<ContentAdapter.ItemViewHolder>() {
             val timeBuilder = "- ${item.time}"
             binding.time.text = timeBuilder
             binding.image.load(item.img)
+            itemView.setOnClickListener {
+                click.invoke(item)
+            }
         }
     }
 

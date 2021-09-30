@@ -51,6 +51,7 @@ class TopNewsFragment: Fragment() {
         val timeBuilder = "- ${content.time}"
         binding.time.text = timeBuilder
         binding.image.load(content.img)
+        binding.root.setOnClickListener { activity?.openInBrowser(content) }
     }
 
 
