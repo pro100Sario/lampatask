@@ -27,9 +27,11 @@ class ContentAdapter: RecyclerView.Adapter<ContentAdapter.ItemViewHolder>() {
     inner class ItemViewHolder(val binding: ItemContentBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(position: Int) {
-            binding.title.text = "Test title"
-            binding.link.text = "Test link"
-            binding.time.text = "- test time post"
+            val item = items[position]
+            binding.title.text = item.title
+            binding.link.text = item.clickUrl
+            val timeBuilder = "- ${item.time}"
+            binding.time.text = timeBuilder
         }
     }
 
