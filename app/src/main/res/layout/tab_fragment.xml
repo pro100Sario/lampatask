@@ -25,6 +25,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
 
+                <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                    android:id="@+id/dots"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:dotsColor="@color/color_divider"
+                    app:dotsCornerRadius="8dp"
+                    app:dotsSize="7dp"
+                    app:dotsSpacing="4dp"
+                    app:dotsWidthFactor="1"
+                    app:dotsClickable="true"
+                    android:layout_gravity="center|bottom"
+                    android:layout_marginBottom="20dp"
+                    app:selectedDotColor="@color/color_base_link_text"
+                    app:progressMode="false"
+                    />
+
             </FrameLayout>
 
             <View android:layout_width="match_parent"

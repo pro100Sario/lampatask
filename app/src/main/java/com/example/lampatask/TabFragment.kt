@@ -64,6 +64,7 @@ class TabFragment: Fragment() {
         viewModel.getContent(requireArguments().getSerializable(TYPE) as ContentType).observe(viewLifecycleOwner, {
             adapter.setItems(it)
             binding.pager.adapter = PagerAdapter(childFragmentManager, it)
+            binding.dots.setViewPager(binding.pager)
         })
 
 
