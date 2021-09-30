@@ -4,10 +4,11 @@ import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
-import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -16,13 +17,16 @@ import com.example.lampatask.databinding.ActivityMainBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import android.view.MenuItem
+import android.view.View
+import android.widget.EditText
+import android.widget.ImageView
+import androidx.core.content.ContextCompat
 
 
 class MainActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var searchView: SearchView
+    private var menuItem: MenuItem? = null
 
     val viewModel by viewModels<MainViewModel>()
 
@@ -62,6 +66,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun loadData() {
+        closeSearch()
         viewModel.loadData().observe(this, {
             when (it) {
                 is Outcome.Failure -> {
@@ -90,31 +95,54 @@ class MainActivity : BaseActivity() {
         override fun getItem(position: Int): Fragment = tabFragments[position]
     }
 
+
+
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
-        val search = menu.findItem(R.id.search)
-        val searchView = search.actionView as SearchView
-        searchView.queryHint = "Search"
+        val menuItem = menu.findItem(R.id.search)
+
+        this.menuItem = menuItem
+
+        val searchView = LayoutInflater.from(this).inflate(R.layout.custom_search_view, null, false) as SearchView
+
+        menuItem.actionView = searchView
+
+        searchView.queryHint = "search..."
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
             override fun onQueryTextChange(newText: String?): Boolean {
                 newText?.let { viewModel.query(it) }
-
                 return true
             }
         })
+
+        val searchPlate = searchView.findViewById<View>(androidx.appcompat.R.id.search_src_text) as EditText
+        val closeButton = searchView.findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn)
+        searchPlate.setTextColor(ContextCompat.getColor(this, R.color.white))
+        searchPlate.setHintTextColor(ContextCompat.getColor(this, R.color.color_divider))
+        closeButton.setColorFilter(ContextCompat.getColor(this, R.color.color_divider))
+
+
+
         return super.onCreateOptionsMenu(menu)
     }
 
 
     override fun onBackPressed() {
-        if (!searchView.isIconified) {
-            searchView.isIconified = true
+        if (menuItem?.isActionViewExpanded == true) {
+            closeSearch()
         } else {
             super.onBackPressed()
         }
+    }
+
+
+    private fun closeSearch() {
+            menuItem?.collapseActionView()
+
     }
 
 }

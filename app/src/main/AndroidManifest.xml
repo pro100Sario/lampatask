@@ -19,9 +19,6 @@
             android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:exported="true">
-            <meta-data android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

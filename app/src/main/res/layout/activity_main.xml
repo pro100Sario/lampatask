@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|enterAlways"
+            app:collapseIcon="@drawable/ic_back_arrow"
             app:title="@string/news"/>
 
         <com.google.android.material.tabs.TabLayout
