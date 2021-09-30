@@ -18,7 +18,8 @@ class MainViewModel : ViewModel() {
 
     }
 
-    fun loadData() {
+    fun loadData(): LiveData<Outcome<Boolean>> {
+        val liveData = MutableLiveData<Outcome<Boolean>>(Outcome.loading(true))
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val contents = contentRepository.loadData()
@@ -26,11 +27,14 @@ class MainViewModel : ViewModel() {
                 storiesData.postValue(contents.filter { it.type == ContentType.STRORIES.getServerName() })
                 videoData.postValue(contents.filter { it.type == ContentType.VIDEO.getServerName() })
                 favouritesData.postValue(contents.filter { it.type == ContentType.FAVOURITES.getServerName() })
-
+                liveData.postValue(Outcome.success(true))
             } catch (t: Throwable) {
                 t.printStackTrace()
+                liveData.postValue(Outcome.failure(t))
             }
         }
+
+        return liveData
     }
 
 

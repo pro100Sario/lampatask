@@ -6,9 +6,10 @@ import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.lifecycle.Observer
 import com.example.lampatask.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -35,7 +36,26 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        viewModel.loadData()
+        loadData()
+    }
+
+    private fun loadData() {
+        viewModel.loadData().observe(this, {
+            when(it) {
+                is Outcome.Failure -> {
+                    hideProgress()
+                    showError {
+                        loadData()
+                    }
+                }
+                is Outcome.Progress -> {
+                    showProgress()
+                }
+                is Outcome.Success -> {
+                    hideProgress()
+                }
+            }
+        })
     }
 
 
